@@ -31,11 +31,11 @@ echo "input: ${1}*.png"
 echo "output: ${2}.mp4, output: ${2}.gif"
 
 # mp4
-cat ${1}*.png | ffmpeg -f image2pipe -r 60 -i - -c:v libx264 "${2}.mp4" -y -crf 30
+cat ${1}*.png | ffmpeg -f image2pipe -r 60 -i - -c:v libx264 "${2}.mp4" -y -crf 1
 
 # gif
-ffmpeg -i ${2}.mp4 -r 60 -y \
-  -filter_complex "[0:v]fps=30,scale=800:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse" \
+ffmpeg -i ${2}.mp4 -y \
+  -filter_complex "[0:v]fps=20,scale=1200:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse" \
   -loop 0 \
   ${2}.gif 
 #
